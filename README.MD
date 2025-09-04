@@ -18,6 +18,12 @@ Este projeto é uma aplicação web para gerenciamento de tarefas (To Do App), c
 - Dotenv para variáveis de ambiente
 - CORS para comunicação entre frontend e backend
 
+## Atualizações Recentes
+
+- Implementação das rotas de usuários e tarefas no backend.
+- Criptografia de senha de usuário utilizando bcrypt.
+- Adição das operações de CRUD para usuários e tarefas.
+
 ## Status
 
 🚧 **Projeto em desenvolvimento** 🚧
