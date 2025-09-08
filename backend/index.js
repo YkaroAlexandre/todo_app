@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { PrismaClient } from "./generated/prisma/index.js";
 import userRoutes from "./routes/userRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
+import authenticateToken from "./middleware/auth.js";
 
 dotenv.config();
 const app = express();
@@ -20,5 +21,7 @@ app.listen(3000, () => {
     console.log("Servidor rodando na porta 3000");
 })
 
+// Rotas dos usuários.
 app.use("/users", userRoutes(prisma));
-app.use("/tasks", taskRoutes(prisma));
+// Rota das tasks com autenticador.
+app.use("/tasks", authenticateToken, taskRoutes(prisma));

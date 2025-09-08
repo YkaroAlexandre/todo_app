@@ -20,8 +20,8 @@ export default (prisma) =>{
     });
 
     // Listar todas as tarefas
-    router.get("/:userId", async (req, res) => {
-        const { userId } = req.params;
+    router.get("/", async (req, res) => {
+        const userId  = req.user.userId;
         try {
             const tasks = await prisma.task.findMany({
                 where: { userId: Number(userId) }

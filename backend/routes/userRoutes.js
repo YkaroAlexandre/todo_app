@@ -1,5 +1,6 @@
 import express from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 const router = express.Router();
 
 export default (prisma) => {
@@ -74,6 +75,31 @@ export default (prisma) => {
 
         } catch (error) {
             res.status(500).json({error: error.message});
+        }
+    });
+
+    // Rota de login com validação e 
+    router.post("/login", async (req, res) =>{
+        const { email, password } = req.body;
+        try {
+            const user = await prisma.user.findUnique({
+                where: { email }
+            })
+            if (!user) return res.status(401).json({error: "Usuário não encontrado."});
+            
+            const valid = await bcrypt.compare(password, user.password);
+            if (!valid) return res.status(401).json({error: "Senha Invalida."});
+        
+
+            const token = jwt.sign (
+                {userId: user.id, email: user.email},
+                process.env.JWT_SECRET,
+                {expiresIn: "1h"}
+            );
+            res.json({token})
+        }
+        catch (error){
+            res.status(500).json({error: error.message})
         }
     });
     return router;

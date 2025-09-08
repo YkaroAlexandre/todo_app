@@ -23,6 +23,9 @@ Este projeto é uma aplicação web para gerenciamento de tarefas (To Do App), c
 - Implementação das rotas de usuários e tarefas no backend.
 - Criptografia de senha de usuário utilizando bcrypt.
 - Adição das operações de CRUD para usuários e tarefas.
+- Ajuste das rotas para seguir boas práticas REST.
+- Correção de bugs nas rotas de deleção e atualização.
+- Implementação de autenticação JWT e middleware de proteção de rotas.
 
 ## Status
 
