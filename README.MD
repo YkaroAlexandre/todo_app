@@ -17,6 +17,7 @@ Este projeto é uma aplicação web para gerenciamento de tarefas (To Do App), c
 - Bcrypt para hash de senhas
 - Dotenv para variáveis de ambiente
 - CORS para comunicação entre frontend e backend
+- express-validator para validação de dados
 
 ## Atualizações Recentes
 
@@ -26,6 +27,7 @@ Este projeto é uma aplicação web para gerenciamento de tarefas (To Do App), c
 - Ajuste das rotas para seguir boas práticas REST.
 - Correção de bugs nas rotas de deleção e atualização.
 - Implementação de autenticação JWT e middleware de proteção de rotas.
+- Adição de validação de dados de entrada com express-validator.
 
 ## Status
 
