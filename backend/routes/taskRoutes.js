@@ -4,7 +4,9 @@ const router = express.Router();
 export default (prisma) =>{
     // Criar tarefa
     router.post("/", async (req, res) =>{
-        const { title, description, done, userId } = req.body;
+
+        const userId = req.user.userId;
+        const { title, description, done } = req.body;
         try {
             let data = {title, description, userId, done};
             

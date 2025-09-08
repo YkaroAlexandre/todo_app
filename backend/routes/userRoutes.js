@@ -1,24 +1,36 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { body, validationResult } from "express-validator";
 const router = express.Router();
 
 export default (prisma) => {
     // Criar usuario
-    router.post("/", async (req, res) =>{
-        const {name, email, password} = req.body;
-        try {
-            // Criptografando a senha
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const user = await prisma.user.create({
-                data: {name, email, password: hashedPassword}
-            });
-            res.json(user);
-            console.log("Criado com sucesso!");
-        } catch (error) {
-            res.status(500).json({error: error.message});
-        }
-    });
+    router.post("/", 
+        [
+            body("name").notEmpty().withMessage("Nome é obrigatório!"),
+            body("email").isEmail().withMessage("Email inválido"),
+            body("password").isLength({ min:6 }).withMessage("A senha deve ter pelo menos 6 caracteres")
+        ],
+        async (req, res) =>{
+            const errors = validationResult(req);
+            if(!errors.isEmpty()){
+                return res.status(400).json({ errors: errors.array()});
+            }
+
+            const {name, email, password} = req.body;
+            try {
+                // Criptografando a senha
+                const hashedPassword = await bcrypt.hash(password, 10);
+                const user = await prisma.user.create({
+                    data: {name, email, password: hashedPassword}
+                });
+                res.json(user);
+                console.log("Criado com sucesso!");
+            } catch (error) {
+                res.status(500).json({error: error.message});
+            }
+        });
 
     // Listar todos os usuários
     router.get("/", async (req, res) => {
