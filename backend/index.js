@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Está rodando");
+  res.send();
 });
 
 app.listen(3000, () => {
