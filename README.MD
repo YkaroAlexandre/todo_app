@@ -1,40 +1,75 @@
 # To Do App
 
-Este projeto é uma aplicação web para gerenciamento de tarefas (To Do App), composta por um backend em Node.js com Express e Prisma, e um frontend (em desenvolvimento) para interação do usuário.
+Aplicação web simples para gerenciamento de tarefas (To Do App). O projeto contém um backend em Node.js (Express + Prisma) que expõe uma API REST com autenticação e um frontend React em desenvolvimento.
 
-## Estrutura do Projeto
+## Estrutura do projeto (visão rápida)
 
-- **backend/**: API REST construída com Node.js, Express e Prisma ORM, responsável pelo gerenciamento das tarefas, autenticação de usuários e comunicação com o banco de dados.
-- **frontend/**: Interface do usuário (em desenvolvimento), que permitirá criar, visualizar, editar e excluir tarefas.
+- `backend/` — API REST
+	- `index.js` — ponto de entrada do servidor Express
+	- `routes/` — rotas da API (`userRoutes.js`, `taskRoutes.js`)
+	- `middleware/auth.js` — middleware JWT que protege rotas
+	- `prisma/schema.prisma` — esquema do banco de dados
+	- `generated/prisma/` — cliente Prisma gerado (pré-commitado no repositório)
 
-## Tecnologias Utilizadas
+- `frontend/` — app React (em desenvolvimento)
+	- `src/` — código-fonte (ex.: `pages/Home.js`, `pages/Login.js`, `services/api.js`)
+	- `build/` — pasta de build gerada
 
-- Node.js
-- Express
-- Prisma ORM
-- MySQL (ou outro banco de dados relacional)
-- JWT para autenticação
-- Bcrypt para hash de senhas
-- Dotenv para variáveis de ambiente
-- CORS para comunicação entre frontend e backend
-- express-validator para validação de dados
+## Tecnologias principais
 
-## Atualizações Recentes
+- Node.js, Express
+- Prisma ORM (cliente gerado em `backend/generated/prisma`)
+- JWT (autenticação) e Bcrypt (hash de senha)
+- React (frontend)
 
-- Implementação das rotas de usuários e tarefas no backend.
-- Criptografia de senha de usuário utilizando bcrypt.
-- Adição das operações de CRUD para usuários e tarefas.
-- Ajuste das rotas para seguir boas práticas REST.
-- Correção de bugs nas rotas de deleção e atualização.
-- Implementação de autenticação JWT e middleware de proteção de rotas.
-- Adição de validação de dados de entrada com express-validator.
+## Padrões e convenções do projeto (observáveis no código)
 
-## Status
+- Autenticação: JWT usado para proteger rotas; ver `backend/middleware/auth.js`. As rotas que alteram dados estão protegidas.
+- Validação: `express-validator` é utilizado nas rotas (veja `routes/` para exemplos de validação antes de enviar para o service/DB).
+- Prisma: o client gerado foi incluído no repositório (`backend/generated/prisma`). Migrations também estão no repositório em `backend/prisma/migrations/`.
+- Organização: responsabilidades separadas por pasta — rotas em `routes/`, middleware em `middleware/`, esquema em `prisma/`.
 
-🚧 **Projeto em desenvolvimento** 🚧
+## Executando o projeto (PowerShell)
 
-Funcionalidades e documentação serão atualizadas conforme o progresso do projeto.
+As instruções abaixo presumem que você tem Node.js instalado.
+
+- Backend (modo desenvolvimento):
+
+```powershell
+cd backend
+npm install
+# crie um .env com as variáveis necessárias (DB URL, JWT secret). Se houver um .env.example, copie-o para .env
+# exemplo: copy .env.example .env
+npm run dev
+```
+
+Observação: o repositório já inclui o cliente Prisma gerado em `backend/generated/prisma` e migrations em `backend/prisma/migrations/`. Se você preferir regenerar o client localmente use `npx prisma generate` (com as variáveis de ambiente configuradas).
+
+- Frontend (modo desenvolvimento):
+
+```powershell
+cd frontend
+npm install
+npm start
+```
+
+Para criar um build de produção do frontend:
+
+```powershell
+cd frontend
+npm run build
+```
+
+## Pontos importantes ao contribuir
+
+- Revisar `backend/routes/*` para entender a forma como as rotas aceitam e validam entradas antes de alterar o fluxo.
+- Se modificar o modelo Prisma (`prisma/schema.prisma`), atualize migrations e regenere o client (`npx prisma migrate dev` / `npx prisma generate`) — note que há um client gerado com o projeto.
+- Senhas são sempre hasheadas com bcrypt antes de salvar; autenticação retorna um token JWT usado no header `Authorization: Bearer <token>`.
+
+## Status atual
+
+O backend tem as rotas de usuários e tarefas implementadas, autenticação JWT, hashing de senha e validação básica de entrada. O frontend está em desenvolvimento e contém páginas de Login, Register e Home em `frontend/src/pages`.
 
 ---
 
-Sinta-se à vontade para contribuir ou relatar problemas!
+Se precisar que eu atualize instruções de execução (scripts de `package.json`) ou que eu modifique o README para outra língua/formato, me diga quais detalhes você prefere que eu inclua.
