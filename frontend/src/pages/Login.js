@@ -1,6 +1,8 @@
 import { useState } from "react";
+import "../index.css";
+import { Form, Button } from "react-bootstrap";
 
-export default function Login() {
+function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
@@ -32,9 +34,10 @@ export default function Login() {
     }
 
     return (
-        <div>
+        <div className="container">
             <h1>Login</h1>
-            <form onSubmit={handleLogin}>
+            {/* <Form onSubmit={handleLogin}>
+                <Form.Label>E-mail</Form.Label>
                 <input
                     required
                     type="email"
@@ -53,9 +56,21 @@ export default function Login() {
                 <button type="submit">Entrar</button>
                 <p>Não tem uma conta? </p>
                 <button type="button" onClick={() => window.location.href = "/register"}>Registrar</button>
-            </form>
+            </Form> */}
+            <Form>
+      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control type="email" placeholder="name@example.com" />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label>Senha</Form.Label>
+        <Form.Control type="password" />
+        
+      </Form.Group>
+        <Button type="submit">Entrar</Button>
+    </Form>
         </div>
     )
 }
 
-  
+export default Login;

@@ -1,13 +1,69 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+*{
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  padding: 0;
+
+}
+
+:root {
+  --font-family: 'Patrick Hand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+
+
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+  height: 100vh;
+  width: 100vw;
+  background-image: url('../src/assets/backgroundMadeiraClara.jpg');
+  background-size: cover;
+  background-clip: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: ease-in 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+input::placeholder {
+  font-family: var(--font-family);
+}
+
+
+.container {
+  background-image: url(../src/assets/caderno1.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+  height: 90vh;
+  width: 60vw;
+}
+
+@media screen and (max-width: 650px) {
+  body {
+    transition: ease-in 0.5s;
+    font-family: var(--font-family);
+    .container {
+      width: 90vw;
+      height: 80vh;
+
+  }
+}
 }
