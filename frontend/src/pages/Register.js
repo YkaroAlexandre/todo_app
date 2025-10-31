@@ -1,10 +1,13 @@
 import { useState } from "react";
+import "../index.css";
+import "./Register.css";
+import { Form, Button } from "react-bootstrap";
 
 export default function Register() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
+    const API_URL = process.env.REACT_APP_API_URL;
 
     async function handleRegister(e){
         e.preventDefault();
@@ -25,43 +28,42 @@ export default function Register() {
 
         if (res.ok) {
             localStorage.setItem("token", data.token);
-            window.location.href = "/";
+            window.location.href = "/login/";
         } else {
             alert(data.message);
         }
     }
 
      return (
-        <div>
-            <h1>Register</h1>
-            <form onSubmit={handleRegister}>
-                <input
-                    required
-                    type="text"
-                    placeholder="Nome"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
+        <div className="container">
+            <header>
+                <h1>Register</h1>
+            </header>
+            <main>
+            <Form onSubmit={handleRegister}>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Nome:</Form.Label>
+                    <Form.Control required type="text" placeholder="Seu nome" value={name} onChange={(e) => setName(e.target.value)} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Email:</Form.Label>
+                    <Form.Control required type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Senha:</Form.Label>
+                    <Form.Control required type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-                <input
-                    required
-                    type="email"
-                    placeholder="E-mail"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+                </Form.Group>
+                <Button className="botao" type="submit">Criar</Button>
+            </Form>
+            </main>
 
-                <input
-                    required
-                    type="password"
-                    placeholder="Senha"
-                    value={password}
-                    onChange = {(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">Criar</button>
-                <p>Já tem uma conta? </p>
-                <button type="button" onClick={() => window.location.href = "/"}>Entrar</button>
-            </form>
+            <footer>
+                <div className="container-register">
+                    <p id="sem-conta">Já tem uma conta? </p>
+                    <Button className="botao" href="/">Entrar</Button>
+                </div>
+            </footer>
         </div>
     )
 }

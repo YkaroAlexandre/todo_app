@@ -11,6 +11,9 @@
   --font-family: 'Patrick Hand', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  --color-button-initial: #8dbb30;
+  --color-button-border: #83ad2d;
+  --color-button-hover: #7ba329;
 
 
 }
@@ -53,15 +56,25 @@ input::placeholder {
   align-items: center;
   padding-top: 50px;
   height: 90vh;
-  width: 60vw;
+  min-width: 35vw;
 }
 
+.botao{
+  background-color: var(--color-button-initial);
+  border-color: var(--color-button-border);
+}
+
+.botao:hover{
+  background-color: var(--color-button-hover);
+  border-color: var(--color-button-border);
+
+}
 @media screen and (max-width: 650px) {
   body {
     transition: ease-in 0.5s;
     font-family: var(--font-family);
     .container {
-      width: 90vw;
+      width: 100vw;
       height: 80vh;
 
   }

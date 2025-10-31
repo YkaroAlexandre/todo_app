@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../index.css";
+import "./Login.css";
 import { Form, Button } from "react-bootstrap";
 
 function Login() {
@@ -27,7 +28,7 @@ function Login() {
 
         if (res.ok) {
             localStorage.setItem("token", data.token);
-            window.location.href = "/home";
+            window.location.href = "/home/";
         } else {
             alert(data.message);
         }
@@ -35,40 +36,31 @@ function Login() {
 
     return (
         <div className="container">
-            <h1>Login</h1>
-            {/* <Form onSubmit={handleLogin}>
-                <Form.Label>E-mail</Form.Label>
-                <input
-                    required
-                    type="email"
-                    placeholder="E-mail"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+            <header>
+                <h1>Login</h1>
+            </header>
+            <main>
+            <Form onSubmit={handleLogin}>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Email:</Form.Label>
+                    <Form.Control required type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Senha:</Form.Label>
+                    <Form.Control required type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-                <input
-                    required
-                    type="password"
-                    placeholder="Senha"
-                    value={password}
-                    onChange = {(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">Entrar</button>
-                <p>Não tem uma conta? </p>
-                <button type="button" onClick={() => window.location.href = "/register"}>Registrar</button>
-            </Form> */}
-            <Form>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="name@example.com" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label>Senha</Form.Label>
-        <Form.Control type="password" />
-        
-      </Form.Group>
-        <Button type="submit">Entrar</Button>
-    </Form>
+                </Form.Group>
+                <Button className="botao" type="submit">Entrar</Button>
+            </Form>
+            </main>
+
+            <footer>
+                <div className="container-login">
+                    <p id="sem-conta">Não tem uma conta? </p>
+                    <Button className="botao"  href="/register">Registrar</Button>
+
+                </div>
+            </footer>
         </div>
     )
 }
