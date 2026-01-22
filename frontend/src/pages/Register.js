@@ -28,7 +28,7 @@ export default function Register() {
 
         if (res.ok) {
             localStorage.setItem("token", data.token);
-            window.location.href = "/login/";
+            window.location.href = "/";
         } else {
             alert(data.message);
         }

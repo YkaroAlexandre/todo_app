@@ -90,7 +90,7 @@ export default (prisma) => {
         }
     });
 
-    // Rota de login com validação e 
+    // Rota de login com validação
     router.post("/login", async (req, res) =>{
         const { email, password } = req.body;
         try {

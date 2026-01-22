@@ -6,7 +6,7 @@ import { Form, Button } from "react-bootstrap";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
+    const API_URL = process.env.REACT_APP_API_URL;
 
     async function handleLogin(e){
         e.preventDefault();
