@@ -38,8 +38,7 @@ As instruções abaixo presumem que você tem Node.js instalado.
 ```powershell
 cd backend
 npm install
-# crie um .env com as variáveis necessárias (DB URL, JWT secret). Se houver um .env.example, copie-o para .env
-# exemplo: copy .env.example .env
+# crie um .env com as variáveis necessárias (DB URL, JWT secret).
 npm run dev
 ```
 
@@ -71,5 +70,3 @@ npm run build
 O backend tem as rotas de usuários e tarefas implementadas, autenticação JWT, hashing de senha e validação básica de entrada. O frontend está em desenvolvimento e contém páginas de Login, Register e Home em `frontend/src/pages`.
 
 ---
-
-Se precisar que eu atualize instruções de execução (scripts de `package.json`) ou que eu modifique o README para outra língua/formato, me diga quais detalhes você prefere que eu inclua.
