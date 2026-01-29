@@ -1,7 +1,6 @@
 import React from 'react';
 import './Home.css';
 import { useEffect, useState } from 'react';
-import { Navbar, Container, Button } from 'react-bootstrap';
 const API_URL  = process.env.REACT_APP_API_URL;
 
 export default function Home() {
@@ -22,6 +21,7 @@ export default function Home() {
         return response.json();
 	}
 
+	// Carrega os dados quando o componente é montado
 	useEffect(() => {
 		fetchData().then((json) => {
 			setData(json);
@@ -31,16 +31,36 @@ export default function Home() {
 		});
 	},[])
 
-	if (loading) return <p>Carregando...</p>;
+	if (loading) return <div className="spinner-border" role="status">
+  <span className="sr-only"></span>
+</div>;
 	return (
 		<div className='container'>
 			<header>
 				<h1>Home</h1>
 			</header>
-			<ul className='list-group'>
-				{data.map(item => 
-				<li key={item.id}>{item.title} | {item.description} | {item.done ? 'Concluído' : 'Pendente'}</li>)}
-			</ul>
+			<table className='list-group'>
+				<thead>
+					<tr>
+						<th>Título</th>
+						<th>Descrição</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					{data.map(item => 
+						<tr key={item.id}>
+							<td>{item.title}</td>
+							<td>{item.description}</td>
+							<td>
+								<i class="bi bi-check"></i>
+								<i class="bi bi-x"></i>
+
+							</td>
+						</tr>)}
+				</tbody>
+
+			</table>
 
 		</div>
 	);
