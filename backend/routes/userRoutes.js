@@ -108,7 +108,7 @@ export default (prisma) => {
                 process.env.JWT_SECRET,
                 {expiresIn: "1h"}
             );
-            res.json({token})
+            res.json({token, message : "Login realizado com sucesso!"});
         }
         catch (error){
             res.status(500).json({error: error.message})
