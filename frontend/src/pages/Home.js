@@ -7,6 +7,11 @@ export default function Home() {
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 
+	function sairDaConta() {
+		localStorage.removeItem("token");
+		window.location.href = "/";
+	}
+
 	async function fetchData() {
 		const token = localStorage.getItem("token");
         const response = await fetch(`${API_URL}/tasks`, {
@@ -39,12 +44,14 @@ export default function Home() {
 			<header>
 				<h1>Home</h1>
 			</header>
+			<main>
+
 			<table className='list-group'>
 				<thead>
 					<tr>
 						<th>Título</th>
 						<th>Descrição</th>
-						<th>Status</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -52,9 +59,9 @@ export default function Home() {
 						<tr key={item.id}>
 							<td>{item.title}</td>
 							<td>{item.description}</td>
-							<td>
-								<i class="bi bi-check"></i>
-								<i class="bi bi-x"></i>
+							<td className='td-status'>
+								<i className="bi bi-check" style={{color:"green"}}></i>
+								<i className="bi bi-x" style={{color:"red"}}></i>
 
 							</td>
 						</tr>)}
@@ -62,6 +69,10 @@ export default function Home() {
 
 			</table>
 
+			</main>
+			<footer>
+				<i className="bi bi-house-fill" onClick={sairDaConta}></i>
+			</footer>
 		</div>
 	);
 }
