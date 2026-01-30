@@ -56,7 +56,6 @@ input::placeholder {
   align-items: center;
   height: 90vh;
   padding-top: 70px;
-  min-width: 35vw;
   overflow: hidden;
 }
 
@@ -73,9 +72,6 @@ input::placeholder {
 @media screen and (max-width: 768px) {
   body {
     min-width: 35vw;
-  min-height: 121vh;
-
-
     transition: ease-in 0.5s;
     font-family: var(--font-family);
     .container {
