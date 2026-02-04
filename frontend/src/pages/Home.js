@@ -1,16 +1,39 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import './Home.css';
 import { useEffect, useState } from 'react';
+import { Form } from 'react-bootstrap';
 const API_URL  = process.env.REACT_APP_API_URL;
 
 export default function Home() {
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 
+	const [show, setShow] = useState(false);
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+
+
 	function sairDaConta() {
 		localStorage.removeItem("token");
 		window.location.href = "/";
 	}
+
+	async function handleCreateTask(e) {
+		e.preventDefault();
+		const token = localStorage.getItem("token");
+		const res = await fetch(`${API_URL}/tasks`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${token}`
+			},
+
+		});
+
+	}
+
 
 	async function fetchData() {
 		const token = localStorage.getItem("token");
@@ -40,6 +63,8 @@ export default function Home() {
   <span className="sr-only"></span>
 </div>;
 	return (
+
+		
 		<div className='container'>
 			<header>
 				<h1>Home</h1>
@@ -51,7 +76,7 @@ export default function Home() {
 					<tr>
 						<th>Título</th>
 						<th>Descrição</th>
-						<th></th>
+						<th id='btn-adicionar-tarefa'><i title='Adicionar Tarefa' onClick={handleShow} className="bi bi-plus-square-fill botao-mais" ></i></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -73,6 +98,28 @@ export default function Home() {
 			<footer>
 				<i className="bi bi-house-fill" onClick={sairDaConta}></i>
 			</footer>
+
+			<Modal show={show} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>Modal heading</Modal.Title>
+				</Modal.Header>
+
+				<Modal.Body>
+					<Form onSubmit={handleCreateTask}>
+
+					</Form>
+				</Modal.Body>
+
+				<Modal.Footer>
+					<Button onClick={handleClose}>
+						Close
+					</Button>
+					<Button variant="primary" onClick={handleClose}>
+						Save Changes
+					</Button>
+				</Modal.Footer>
+			</Modal>
+
 		</div>
 	);
 }
