@@ -1,9 +1,7 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 import './Home.css';
+import ModalComponent from '../components/Modal';
 import { useEffect, useState } from 'react';
-import { Form } from 'react-bootstrap';
 const API_URL  = process.env.REACT_APP_API_URL;
 
 export default function Home() {
@@ -45,6 +43,7 @@ export default function Home() {
         });
         if (!response.ok) {
             throw new Error('Erro ao buscar tarefas');
+
         }
         return response.json();
 	}
@@ -56,12 +55,14 @@ export default function Home() {
 			setLoading(false);
 		}).catch((error) => {
 			alert(error.message);
+			window.location.href = "/";
+
 		});
 	},[])
 
 	if (loading) return <div className="spinner-border" role="status">
-  <span className="sr-only"></span>
-</div>;
+  			<span className="sr-only"></span>
+		</div>;
 	return (
 
 		
@@ -98,28 +99,8 @@ export default function Home() {
 			<footer>
 				<i className="bi bi-house-fill" onClick={sairDaConta}></i>
 			</footer>
-
-			<Modal show={show} onHide={handleClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>Modal heading</Modal.Title>
-				</Modal.Header>
-
-				<Modal.Body>
-					<Form onSubmit={handleCreateTask}>
-
-					</Form>
-				</Modal.Body>
-
-				<Modal.Footer>
-					<Button onClick={handleClose}>
-						Close
-					</Button>
-					<Button variant="primary" onClick={handleClose}>
-						Save Changes
-					</Button>
-				</Modal.Footer>
-			</Modal>
-
+			<ModalComponent show={show} onHide={handleClose} onSubmit={handleCreateTask} />
+			
 		</div>
 	);
 }
