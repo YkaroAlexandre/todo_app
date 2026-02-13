@@ -21,14 +21,28 @@ export default function Home() {
 	async function handleCreateTask(e) {
 		e.preventDefault();
 		const token = localStorage.getItem("token");
+		const form = new FormData(e.target);
+		const title = form.get("title");
+		const description = form.get("description");
 		const res = await fetch(`${API_URL}/tasks`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 				"Authorization": `Bearer ${token}`
 			},
+			body: JSON.stringify({ title, description })
 
 		});
+
+		if (!res.ok) {
+			const errorData = await res.json();
+			alert(errorData.message || "Erro ao criar tarefa");
+			return;
+		}
+
+		const createdTask = await res.json();
+		setData(prevData => [...prevData, createdTask]);
+		handleClose();
 
 	}
 
