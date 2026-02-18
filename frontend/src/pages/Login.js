@@ -6,10 +6,14 @@ import { Form, Button } from "react-bootstrap";
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const [isExiting, setIsExiting] = useState(false);
     const API_URL = process.env.REACT_APP_API_URL;
 
     async function handleLogin(e){
         e.preventDefault();
+        setIsExiting(false);
+        setError("");
 
         const res = await fetch(`${API_URL}/users/login`, {
             method: "POST",
@@ -30,7 +34,11 @@ export default function Login() {
             localStorage.setItem("token", data.token);
             window.location.href = "/home/";
         } else {
-            alert(data.message);
+            setError(data?.message || "Email ou senha inválidos");
+            setTimeout(() => {
+                setIsExiting(true);
+                setTimeout(() => setError(""), 500);
+            }, 3000);
         }
     }
 
@@ -40,6 +48,8 @@ export default function Login() {
                 <h1>Login</h1>
             </header>
             <main>
+            
+            {error && <div className={`alert alert-danger ${isExiting ? 'exit' : ''}`} role="alert">{error}</div>}
             <Form onSubmit={handleLogin}>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Email:</Form.Label>
