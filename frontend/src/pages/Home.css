@@ -58,3 +58,8 @@ footer{
     border-color: var(--color-button-border);
 
 }
+
+.tarefa-concluida{
+    text-decoration: line-through;
+    background-color: green;
+}
