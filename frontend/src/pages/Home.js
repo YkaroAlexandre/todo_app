@@ -7,13 +7,33 @@ const API_URL  = process.env.REACT_APP_API_URL;
 export default function Home() {
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
-
 	const [show, setShow] = useState(false);
+	const token = localStorage.getItem("token");
+
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-	const token = localStorage.getItem("token");
-	
+	const handleDelete = async (taskId) => {
+		if (!window.confirm("Tem certeza que deseja excluir esta tarefa?")) {
+			return;
+		}
+		try {
+			const res = await fetch(`${API_URL}/tasks/${taskId}`, {
+				method: "DELETE",
+				headers: {
+					"Authorization": `Bearer ${token}`
+				}
+			});
+			if (!res.ok) {
+				throw new Error("Erro ao excluir tarefa");
+			}
+			setData(prevData => prevData.filter(t => t.id !== taskId));
+		} catch (error) {
+			alert(error.message);
+		}
+	}
+
+
 	// Função para marcar/desmarcar tarefa como concluída
 	const handleCheck = async (taskId) => {
 		const task = data.find(t => t.id === taskId);
@@ -131,7 +151,7 @@ export default function Home() {
 							<td className={item.done ? 'tarefa-concluida' : ''}>{item.description}</td>
 							<td className='td-status'>
 								<i className="bi bi-check" onClick={() => handleCheck(item.id)} style={{color:"green"}}></i>
-								<i className="bi bi-x" style={{color:"red"}}></i>
+								<i className="bi bi-x" onClick={() => handleDelete(item.id)} style={{color:"red"}}></i>
 
 							</td>
 						</tr>)}
