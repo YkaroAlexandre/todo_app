@@ -28,14 +28,16 @@ export default (prisma) => {
                 res.json(user);
                 console.log("Criado com sucesso!");
             } catch (error) {
-                res.status(500).json({error: error.message});
+                res.status(500).json({error: "Erro ao criar usuário" + error.message});
             }
         });
 
     // Listar todos os usuários
     router.get("/", async (req, res) => {
         try {
-            const users = await prisma.user.findMany();
+            const users = await prisma.user.findMany({
+                select: { id: true, name: true, email: true }
+            });
             res.json(users);
         } catch (error) {
             res.status(500).json({ error: "Erro ao listar usuários" });
@@ -47,11 +49,12 @@ export default (prisma) => {
         const { id } = req.params;
         try {
             const user = await prisma.user.findUnique({
-                where: { id: Number(id) }
+                where: { id: Number(id) },
+                select: { id: true, name: true, email: true, tasks: true }
             });
             res.json(user);
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({ error: "Erro ao listar usuários" + error.message });
         }
     });
 
@@ -65,7 +68,7 @@ export default (prisma) => {
             res.status(204).send();
             console.log("Deletado com sucesso!");
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({ error: "Erro ao deletar usuário" + error.message });
         }
     });
 
@@ -86,7 +89,7 @@ export default (prisma) => {
             console.log("Atualizado com sucesso!");
 
         } catch (error) {
-            res.status(500).json({error: error.message});
+            res.status(500).json({error: "Erro ao atualizar usuário" + error.message});
         }
     });
 
