@@ -1,21 +1,49 @@
 
 table{
+
     width: 100%;
     border-collapse: collapse;
-    align-items: center;
+    max-height: 60%;
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+    scrollbar-width: thin;
 }
 th, td {
     border: 1px solid black;
     min-width: 90px;
     max-width: 90px;
+    padding: 5px 3px;
 }
-th, td {
-    padding: 8px;
+
+td{
+    overflow: auto;
+    text-wrap: wrap;
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+    scrollbar-width: thin;
+}
+
+thead th:nth-child(2){
+    margin: 0 -5px;
+}
+
+tbody{
+    overflow: auto;
+}
+
+thead tr, tbody tr{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 60px;
+    
+
 }
 
 .td-status{
     display: flex;
     justify-content: space-around;
+}
+
+main{
+    padding-left: 40px;
 }
 
 i{
@@ -61,5 +89,6 @@ footer{
 
 .tarefa-concluida{
     text-decoration: line-through;
-    background-color: green;
+    font-weight: bold;
+    font-style: italic;
 }
